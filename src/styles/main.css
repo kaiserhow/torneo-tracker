@@ -1,0 +1,43 @@
+/* ===================================================
+   TORNEOTRACK — styles/main.css
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg:      #0d0d0f;
+  --surface: #131317;
+  --surface2:#1a1a20;
+  --border:  #2a2a35;
+  --accent:  #e8c84a;
+  --danger:  #e84a6a;
+  --text:    #e8e8f0;
+  --muted:   #6b6b80;
+  --win:     #4ae8a0;
+  --loss:    #e84a6a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(232,200,74,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,200,74,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
+
+.app {
+  position: relative; z-index: 1;
+  max-width: 960px; margin: 0 auto; padding: 24px 16px;
+}
