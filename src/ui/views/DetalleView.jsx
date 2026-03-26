@@ -64,6 +64,7 @@ export function DetalleView({ torneo, torneos, onBack, onAddGame, onUpdateGame, 
       {/* Stats panel */}
       <div className="stats-panel">
         <StatCard label="Victorias"    value={stats.wins}            valueClass="win"     bar={stats.wr}     barClass="fill-win" />
+        <StatCard label="Empates"      value={stats.draws}           valueClass="draw" />
         <StatCard label="Derrotas"     value={stats.losses}          valueClass="loss" />
         <StatCard label="% Victoria"   value={fmtPct(stats.wr)}      valueClass="neutral" />
         <StatCard label="Fui 1º turno" value={fmtPct(stats.pFirst)}  valueClass="neutral" bar={stats.pFirst} barClass="fill-accent" />
@@ -79,17 +80,18 @@ export function DetalleView({ torneo, torneos, onBack, onAddGame, onUpdateGame, 
           : Object.entries(roundGroups).map(([rnd, games]) => {
               const rWins  = games.filter(g => g.result === 'win').length;
               const rLoss  = games.filter(g => g.result === 'loss').length;
+              const rDraw  = games.filter(g => g.result === 'draw').length;
               return (
                 <div key={rnd} className="round-group">
                   <div className="round-header">
                     {rnd}
-                    <span className="round-badge">{rWins}V {rLoss}D</span>
+                    <span className="round-badge">{rWins}V {rDraw > 0 ? `${rDraw}E ` : ''}{rLoss}D</span>
                   </div>
                   <div className="games-list">
                     {games.map(g => (
                       <div key={g.id}>
                         <div className="game-row" onClick={() => toggleNote(g.id)}>
-                          <div className={`game-result-dot ${g.result === 'win' ? 'dot-win' : 'dot-loss'}`} />
+                          <div className={`game-result-dot ${g.result === 'win' ? 'dot-win' : g.result === 'draw' ? 'dot-draw' : 'dot-loss'}`} />
                           <div>
                             <div className="game-deck-name">{g.oppDeck}</div>
                             {g.notes && <div className="game-note-preview">📝 {g.notes}</div>}
@@ -97,8 +99,8 @@ export function DetalleView({ torneo, torneos, onBack, onAddGame, onUpdateGame, 
                           <span className={`badge ${g.first === 'yo' ? 'badge-first' : 'badge-second'}`}>
                             {g.first === 'yo' ? '1º YO' : '2º YO'}
                           </span>
-                          <span className={`game-result-text ${g.result === 'win' ? 'text-win' : 'text-loss'}`}>
-                            {g.result === 'win' ? 'VICTORIA' : 'DERROTA'}
+                          <span className={`game-result-text ${g.result === 'win' ? 'text-win' : g.result === 'draw' ? 'text-draw' : 'text-loss'}`}>
+                            {g.result === 'win' ? 'VICTORIA' : g.result === 'draw' ? 'EMPATE' : 'DERROTA'}
                           </span>
                           <button className="game-delete" onClick={e => { e.stopPropagation(); setConfirmId(g.id); }}>✕</button>
                         </div>

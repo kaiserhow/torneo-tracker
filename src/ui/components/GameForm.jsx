@@ -61,6 +61,7 @@ export function GameForm({ open, game, torneos, onSave, onClose }) {
       <Field label="Resultado" error={errors.result}>
         <ToggleGroup>
           <ToggleBtn active={form.result === 'win'}  activeClass="active-win"  onClick={() => set('result', 'win')}>VICTORIA</ToggleBtn>
+          <ToggleBtn active={form.result === 'draw'} activeClass="active-draw" onClick={() => set('result', 'draw')}>EMPATE</ToggleBtn>
           <ToggleBtn active={form.result === 'loss'} activeClass="active-loss" onClick={() => set('result', 'loss')}>DERROTA</ToggleBtn>
         </ToggleGroup>
       </Field>

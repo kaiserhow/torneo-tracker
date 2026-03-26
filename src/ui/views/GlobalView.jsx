@@ -70,7 +70,8 @@ export function GlobalView({ torneos, onBack }) {
       <div className="stats-panel">
         <StatCard label="Torneos"      value={filtered.length}        valueClass="neutral" />
         <StatCard label="Partidas"     value={stats.total}            valueClass="neutral" />
-        <StatCard label="Victorias"    value={stats.wins}             valueClass="win"     bar={stats.wr}     barClass="fill-win" />
+        <StatCard label="Victorias"    value={stats.wins}             valueClass="win"     bar={stats.wr} barClass="fill-win" />
+        <StatCard label="Empates"      value={stats.draws}            valueClass="draw" />
         <StatCard label="Derrotas"     value={stats.losses}           valueClass="loss" />
         <StatCard label="% Victoria"   value={fmtPct(stats.wr)}       valueClass="neutral" />
         <StatCard label="Win yendo 1º" value={fmtPct(stats.wrFirst)}  valueClass="win" />

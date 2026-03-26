@@ -16,7 +16,7 @@ export function DeckStatsPanel({ games }) {
   return (
     <div className="deck-stats-list">
       {entries.map(d => {
-        const total  = d.wins + d.losses;
+        const total  = d.wins + d.losses + d.draws;
         const wr     = pct(d.wins, total);
         const pFirst = pct(d.first_games, total);
         const wrF    = pct(d.first_wins, d.first_games);
@@ -28,6 +28,7 @@ export function DeckStatsPanel({ games }) {
               <div className="deck-stat-name">{d.label}</div>
               <div className="deck-stat-record">
                 <StatPill type="win">{d.wins}V</StatPill>
+                {d.draws > 0 && <StatPill type="draw">{d.draws}E</StatPill>}
                 <StatPill type="loss">{d.losses}D</StatPill>
                 <StatPill type="neutral">{total} partida{total !== 1 ? 's' : ''}</StatPill>
               </div>

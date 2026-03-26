@@ -14,13 +14,15 @@ export function fmtPct(v) {
 export function calcStats(games) {
   const wins   = games.filter(g => g.result === 'win').length;
   const losses = games.filter(g => g.result === 'loss').length;
-  const total  = wins + losses;
+  const draws  = games.filter(g => g.result === 'draw').length;
+  const total  = wins + losses + draws;
   const gF     = games.filter(g => g.first === 'yo');
   const gS     = games.filter(g => g.first === 'opp');
 
   return {
     wins,
     losses,
+    draws,
     total,
     wr:       pct(wins, total),
     pFirst:   pct(gF.length, total),
@@ -35,13 +37,15 @@ export function buildDeckMap(games) {
     const k     = (g.oppDeck || '').trim().toLowerCase() || '__none__';
     const label = (g.oppDeck || '').trim() || '(sin especificar)';
     if (!decks[k]) {
-      decks[k] = { label, wins: 0, losses: 0, first_wins: 0, first_games: 0, second_wins: 0, second_games: 0 };
+      decks[k] = { label, wins: 0, losses: 0, draws: 0, first_wins: 0, first_games: 0, second_wins: 0, second_games: 0 };
     }
     const d = decks[k];
     const isWin = g.result === 'win';
     if (g.first === 'yo') { d.first_games++; if (isWin) d.first_wins++; }
     else                  { d.second_games++; if (isWin) d.second_wins++; }
-    if (isWin) d.wins++; else d.losses++;
+    if (isWin) d.wins++;
+    else if (g.result === 'loss') d.losses++;
+    else d.draws++;
   });
   return decks;
 }
